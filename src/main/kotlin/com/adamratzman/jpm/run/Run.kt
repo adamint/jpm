@@ -16,6 +16,7 @@ class Run(val jpm: JPM) : CliktCommand("Run a package using jpm run PACKAGE ARGS
         if (!packageDirectory.exists()) throw CliktError("Package $name isn't installed!")
         else {
             val processBuilder = exec(jpm,"java -jar ${packageDirectory.listFiles().first { it.extension.endsWith("jar") }.absolutePath} ${arguments.joinToString(" ")}")
+            processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT)
             processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT)
             processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT)
             processBuilder.start().waitFor()

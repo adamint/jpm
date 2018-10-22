@@ -11,6 +11,9 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.subcommands
 import com.google.gson.Gson
 import com.sun.javafx.PlatformUtil
+import java.io.File
+
+
 
 val gson = Gson()
 
@@ -22,7 +25,7 @@ class JPM : CliktCommand(name = "jpm") {
     override fun run() {
     }
 
-    val jpmPath = System.getProperty("user.dir") + "/jpm-data"
+    val jpmPath = File(JPM::class.java.protectionDomain.codeSource.location.toURI()).absolutePath.removeSuffix("jpm.jar") + "jpm-data"
     val cache: List<JPackage> = buildCache(jpmPath)
 }
 
